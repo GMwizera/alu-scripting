@@ -33,3 +33,4 @@ if __name__ == "__main__":
         top_ten(sys.argv[1])
     else:
         print("Usage: ./1-top_ten.py <subreddit>")
+
