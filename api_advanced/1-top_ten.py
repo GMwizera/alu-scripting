@@ -1,39 +1,29 @@
 #!/usr/bin/python3
-"""Function that queries the Reddit API"""
+"""
+1-top_ten
+Queries the Reddit API and prints the titles of the first 10 hot posts
+"""
 import requests
 
 
 def top_ten(subreddit):
-    """Prints titles of first 10 hot posts for a given subreddit"""
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    headers = {'User-Agent': 'linux:0:1.0 (by /u/JuiceExtension6952)'}
+    """Prints the titles of the first 10 hot posts for a given subreddit"""
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
+    headers = {"User-Agent": "ALU-Agent/0.1"}
     params = {"limit": 10}
 
     try:
-        r = requests.get(url, headers=headers, params=params,
-                         allow_redirects=False)
-
-        # Check if we got redirected (invalid subreddit)
-        if r.status_code == 302:
-            print("None")
+        response = requests.get(url, headers=headers, params=params, allow_redirects=False)
+        if response.status_code != 200:
+            print(None)
             return
 
-        # Check if request was successful
-        if r.status_code == 200:
-            data = r.json()
+        data = response.json().get("data", {}).get("children", [])
+        if not data:
+            print(None)
+            return
 
-            # Check if we have the expected data structure
-            if 'data' in data and 'children' in data['data']:
-                posts = data['data']['children']
-
-                # Print titles of the first 10 hot posts
-                for post in posts:
-                    if 'data' in post and 'title' in post['data']:
-                        print(post['data']['title'])
-            else:
-                print("None")
-        else:
-            print("None")
-
+        for post in data:
+            print(post.get("data", {}).get("title"))
     except Exception:
-        print("None")
+        print(None)
