@@ -15,21 +15,23 @@ def top_ten(subreddit):
             params=params,
             allow_redirects=False
         )
+        # If the subreddit does not exist or an error occurs, print 'None'
         if r.status_code != 200:
             import sys
             sys.stdout.write('None\n')
             return
-        
+
         data = r.json().get('data', {}).get('children', [])
-        
+
         if not data:
             import sys
             sys.stdout.write('None')
             return
-        
+
         for post in data:
+            title = post.get("data", {}).get("title", "")
             import sys
-            sys.stdout.write(post.get('data', {}).get('title', ''))
+            sys.stdout.write(title + "\n")
     except Exception as e:
         import traceback
         traceback.print_exc()
