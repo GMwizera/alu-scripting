@@ -7,7 +7,7 @@ import sys
 def top_ten(subreddit):
     """Prints the titles of the first 10 hot posts from a subreddit"""
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {"User-Agent": "python:top_ten:v1.0 (by /u/your_username)"}
+    headers = {"User-Agent": "python:top_ten:v1.0 (by /u/JuiceExtension6952)"}
     params = {"limit": 10}
 
     try:
