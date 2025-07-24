@@ -1,12 +1,15 @@
 #!/usr/bin/python3
-"""Function that queries the Reddit API and prints the titles of the first 10 hot posts."""
+"""Function that queries the Reddit API and prints top 10 hot posts."""
 import requests
+import sys
 
 
 def top_ten(subreddit):
     """Prints the titles of the first 10 hot posts for a given subreddit."""
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {"User-Agent": "mac:topten.v1 (by /u/mwizeraAmen)"}
+    headers = {
+        'User-Agent': 'linux:0:1.0 (by /u/JuiceExtension6952)'
+    }
     params = {"limit": 10}
 
     try:
@@ -31,3 +34,10 @@ def top_ten(subreddit):
             print(post.get("data", {}).get("title"))
     except Exception:
         print(None)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) >= 2:
+        top_ten(sys.argv[1])
+    else:
+        print("Usage: ./1-top_ten.py <subreddit>")
